@@ -1,13 +1,17 @@
 (ns shokunin-april-2020.core
   (:gen-class))
-
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (println "Hello, World!"))
 
-(defn build-office [rows-per-office desks-per-row]
-  (make-array Boolean/TYPE rows-per-office desks-per-row ))
+(defn populate-office [rows-per-office desks-per-row population-factor]
+  (let [office-size (* rows-per-office desks-per-row)
+        number-colleages (* office-size population-factor)
+        populated-desks (boolean-array number-colleages true)
+        unpopulated-desks (boolean-array (- office-size number-colleages) false)
+        ]
+  (partition rows-per-office (shuffle (concat populated-desks unpopulated-desks)))))
 
-(defn populate-office [office population-factor]
-  (make-array Boolean/TYPE (count office) (count (first office))))
+(defn count-population [office]
+  (count (filter true? (flatten office))))
