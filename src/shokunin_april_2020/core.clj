@@ -10,4 +10,4 @@
   (make-array Boolean/TYPE rows-per-office desks-per-row ))
 
 (defn populate-office [office population-factor]
-  office)
+  (make-array Boolean/TYPE (count office) (count (first office))))
