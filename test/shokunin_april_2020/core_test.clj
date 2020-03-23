@@ -2,12 +2,10 @@
   (:require [clojure.test :refer :all]
             [shokunin-april-2020.core :refer :all]))
 
-(deftest office-construction
-
-  (deftest office-population
-    (testing "office has specified dimensions"
-      (is (= (count (populate-office 10 15)) 10)))
-    (is (= (count (first (populate-office 10 15))) 15)))
+(deftest office-population
+  (testing "office has specified dimensions"
+    (is (= (count (populate-office 10 15 0.1)) 10))
+    (is (= (count (first (populate-office 10 15 1.0))) 15)))
 
   (testing "randomly populates the office each time"
     (let [populated-office-1 (populate-office 3 3 0.4)
