@@ -9,10 +9,12 @@
         number-colleagues (* office-size population-factor)
         populated-desks (repeat number-colleagues (->Location true))
         unpopulated-desks (repeat (- office-size number-colleagues) (->Location false))]
-    (partition desks-per-row (shuffle (concat populated-desks unpopulated-desks)))))
+    (to-array-2d (partition desks-per-row (shuffle (concat populated-desks unpopulated-desks))))))
+
+(defn count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
 
 (defn count-population [office]
-  (count (filter #(true? (:occupied? %)) (flatten office))))
+  (reduce + (map #(count-occupied-in-row %) office)))
 
 (defn -main
   "I don't do a whole lot ... yet."
