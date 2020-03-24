@@ -2,12 +2,6 @@
   (:gen-class)
   (:require [clojure.pprint :as pp]))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  ; (pp "")
-  )
-
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
@@ -17,3 +11,8 @@
 
 (defn count-population [office]
   (count (filter true? (flatten office))))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (pp/pprint (populate-office 10 10 0.5)))
