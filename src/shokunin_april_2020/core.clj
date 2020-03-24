@@ -12,6 +12,7 @@
     (partition desks-per-row (shuffle (concat populated-desks unpopulated-desks)))))
 
 (defn count-population [office]
+  (aget office 0 3)
   (count (filter #(true? (:occupied? %)) (flatten office))))
 
 (defn -main
