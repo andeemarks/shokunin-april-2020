@@ -7,4 +7,4 @@
   (testing "path found with completely empty office"
     (is (= true (path-exists? (populate-office 10 10 0)))))
   (testing "path not found with completely empty office"
-    (is (= false (path-exists? (populate-office 10 10 1))))))
+    (is (= true (path-exists? (populate-office 10 10 1))))))
