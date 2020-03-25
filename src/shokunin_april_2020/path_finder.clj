@@ -1,7 +1,9 @@
-(ns shokunin-april-2020.path-finder)
+(ns shokunin-april-2020.path-finder
+  (:require [shokunin-april-2020.location :refer :all]))
+
 
 (defn path-exists? [office]
-    true)
+  true)
 
 ; Flood-fill (node, target-color, replacement-color):
 ;  1. If target-color is equal to replacement-color, return.
@@ -12,4 +14,8 @@
 ;     Perform Flood-fill (one step to the west of node, target-color, replacement-color).
 ;     Perform Flood-fill (one step to the east of node, target-color, replacement-color).
 ;  5. Return.
-(defn flood-fill [x y status])
+(defn flood-fill [office current-row current-column]
+  (let [current-location (aget office current-row current-column)]
+    (if (visitable? current-location)
+        (aset office current-row current-column (visited-location)))
+    office))

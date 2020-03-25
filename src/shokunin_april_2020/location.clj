@@ -7,3 +7,6 @@
 (defn populated-location [] (->Location true false false))
 (defn twer-location [] (->Location false true false))
 (defn visited-location [] (->Location false false true))
+
+(defn visitable? [location]
+    (and (not (:visited? location)) (not (:occupied? location))))
