@@ -4,11 +4,11 @@
 
 (defrecord Location [occupied? has-twer?])
 
-(defn empty-location [] (->Location false false))
-(defn populated-location [] (->Location true false))
-(defn twer-location [] (->Location false true))
+(defn- empty-location [] (->Location false false))
+(defn- populated-location [] (->Location true false))
+(defn- twer-location [] (->Location false true))
 
-(defn populate-twer [office]
+(defn- populate-twer [office]
   (let [row-width (count (aget office 0))
         twer-desk-index (rand-int row-width)]
     (aset office 0 twer-desk-index (twer-location))
@@ -24,7 +24,7 @@
         desks-in-rows (partition desks-per-row random-desks)]
     (populate-twer (to-array-2d desks-in-rows))))
 
-(defn count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
+(defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
 
 (defn count-population [office]
   (reduce + (map #(count-occupied-in-row %) office)))
