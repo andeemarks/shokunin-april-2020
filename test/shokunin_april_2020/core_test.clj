@@ -12,12 +12,20 @@
           populated-office-2 (populate-office 3 3 0.4)]
       (is (not (= populated-office-1 populated-office-2)))))
 
-  (testing "constantly locates the TWer in the back row of desks"
+  (testing "predictably locates the TWer in the back row of desks"
     (is (= 0 (:row (find-twer (populate-office 2 5 0.4)))))
     (is (= 0 (:row (find-twer (populate-office 10 10 0.5)))))
     (is (= 0 (:row (find-twer (populate-office 25 40 0.8))))))
 
+  (testing "randomly assigns the TWer in a desk in the back row"
+    (is (not (= (:column (find-twer (populate-office 10 10 0.5)))
+                (:column (find-twer (populate-office 10 10 0.5)))
+                (:column (find-twer (populate-office 10 10 0.5)))))))
+
+  (defn approx-equals [actual expected tolerance]
+    (<= (dec expected) actual (inc expected)))
+
   (testing "populates the office according to the p value"
-    (is (= (count-population (populate-office 2 5 0.4)) 4))
-    (is (= (count-population (populate-office 10 10 0.2)) 20))
-    (is (= (count-population (populate-office 25 40 0.8)) 800))))
+    (is (approx-equals (count-population (populate-office 2 5 0.4)) 4 1))
+    (is (approx-equals (count-population (populate-office 10 10 0.2)) 20 1))
+    (is (approx-equals (count-population (populate-office 25 40 0.8)) 800 1))))
