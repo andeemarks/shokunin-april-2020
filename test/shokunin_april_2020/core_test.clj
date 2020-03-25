@@ -1,6 +1,16 @@
 (ns shokunin-april-2020.core-test
   (:require [clojure.test :refer :all]
+            [clojure.test.check.generators :as gen]
+            [clojure.test.check :as tc]
+            [clojure.test.check.properties :as prop]
+            [clojure.test.check.clojure-test :as test]
             [shokunin-april-2020.core :refer :all]))
+
+(test/defspec twer-always-in-back-row
+  100
+  (prop/for-all [number-of-rows gen/s-pos-int
+                 number-of-desks gen/s-pos-int]
+                (= 0 (:row (find-twer (populate-office number-of-rows number-of-desks 1))))))
 
 (deftest office-population
   (testing "office has specified dimensions"
@@ -11,11 +21,6 @@
     (let [populated-office-1 (populate-office 3 3 0.4)
           populated-office-2 (populate-office 3 3 0.4)]
       (is (not (= populated-office-1 populated-office-2)))))
-
-  (testing "predictably locates the TWer in the back row of desks"
-    (is (= 0 (:row (find-twer (populate-office 2 5 0.4)))))
-    (is (= 0 (:row (find-twer (populate-office 10 10 0.5)))))
-    (is (= 0 (:row (find-twer (populate-office 25 40 0.8))))))
 
   (testing "randomly assigns the TWer in a desk in the back row"
     (is (not (= (:column (find-twer (populate-office 10 10 0.5)))
