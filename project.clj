@@ -5,5 +5,6 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"]]
   :main shokunin-april-2020.core
+  :middleware [whidbey.plugin/repl-pprint]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
