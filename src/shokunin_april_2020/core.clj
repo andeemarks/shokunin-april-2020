@@ -9,8 +9,9 @@
 (defn twer-location [] (->Location false true))
 
 (defn populate-twer [office]
-  (let [row-width (count (aget office 0))]
-    (aset office 0 (rand-int row-width) (twer-location))
+  (let [row-width (count (aget office 0))
+        twer-desk-index (rand-int row-width)]
+    (aset office 0 twer-desk-index (twer-location))
     office))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
@@ -28,9 +29,14 @@
 (defn count-population [office]
   (reduce + (map #(count-occupied-in-row %) office)))
 
+(defn- index-if-twer [row current-index]
+  (if (:has-twer? (aget row current-index))
+    current-index
+    0))
+
 (defn find-twer [office]
   (let [back-row (aget office 0)
-        index-of-twer (areduce back-row i ret 0 (+ ret (if (:has-twer? (aget back-row i)) i 0)))]
+        index-of-twer (areduce back-row i ret 0 (+ ret (index-if-twer back-row i)))]
     {:row 0 :column index-of-twer}))
 
 (defn -main
