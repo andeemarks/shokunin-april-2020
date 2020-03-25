@@ -1,9 +1,14 @@
 (ns shokunin-april-2020.path-finder
   (:require [shokunin-april-2020.location :refer :all]))
 
+(defn- count-visited-in-row [row] (count (filter #(:visited? %) row)))
+
+(defn- path-to-first-row-found? [first-row]
+  (not (= 0 (count-visited-in-row first-row))))
 
 (defn path-exists? [office]
-  true)
+  (let [first-row (aget office (dec (alength office)))]
+    (path-to-first-row-found? first-row)))
 
 (defn- mark-location-as-visited [office row column]
   (aset office row column (visited-location))
