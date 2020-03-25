@@ -9,23 +9,26 @@
     (let [office (populate-office 2 2 0.0)
           _ (aset office 1 0 (visited-location))]
       (is (= true (path-exists? office)))))
+
   (testing "path not found when no visited location found in first row"
     (let [office (populate-office 2 2 0.0)]
       (is (= false (path-exists? office))))))
 
 (deftest flood-filling
-  (let [office (populate-office 2 2 0.0)]
-    (testing "visiting an already visited location does nothing"
-      (let [_ (aset office 0 0 (visited-location))
-            visited-office (flood-fill office 0 0)]
-        (is (= (visited-location) (aget office 0 0)))))
+  (testing "visiting an already visited location does nothing"
+    (let [office (populate-office 2 2 0.0)
+          _ (aset office 0 0 (visited-location))
+          visited-office (flood-fill office 0 0)]
+      (is (= (visited-location) (aget office 0 0)))))
 
-    (testing "visiting an occupied location does nothing"
-      (let [_ (aset office 0 0 (populated-location))
-            visited-office (flood-fill office 0 0)]
-        (is (= (populated-location) (aget office 0 0)))))
+  (testing "visiting an occupied location does nothing"
+    (let [office (populate-office 2 2 0.0)
+          _ (aset office 0 0 (populated-location))
+          visited-office (flood-fill office 0 0)]
+      (is (= (populated-location) (aget office 0 0)))))
 
-    (testing "visiting an unvisited location marks it as visited"
-      (let [_ (aset office 0 0 (empty-location))
-            visited-office (flood-fill office 0 0)]
-        (is (= (visited-location) (aget office 0 0)))))))
+  (testing "visiting an unvisited location marks it as visited"
+    (let [office (populate-office 2 2 0.0)
+          _ (aset office 0 0 (empty-location))
+          visited-office (flood-fill office 0 0)]
+      (is (= (visited-location) (aget office 0 0))))))
