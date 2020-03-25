@@ -22,7 +22,7 @@
                 (:column (find-twer (populate-office 10 10 0.5)))
                 (:column (find-twer (populate-office 10 10 0.5)))))))
 
-  (defn approx-equals [actual expected tolerance]
+  (defn- approx-equals [actual expected tolerance]
     (<= (dec expected) actual (inc expected)))
 
   (testing "populates the office according to the p value"
