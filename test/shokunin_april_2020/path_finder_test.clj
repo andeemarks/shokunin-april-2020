@@ -19,16 +19,16 @@
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (visited-location))
           visited-office (flood-fill office 0 0)]
-      (is (= (visited-location) (aget office 0 0)))))
+      (is (= (visited-location) (aget visited-office 0 0)))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (populated-location))
           visited-office (flood-fill office 0 0)]
-      (is (= (populated-location) (aget office 0 0)))))
+      (is (= (populated-location) (aget visited-office 0 0)))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (empty-location))
           visited-office (flood-fill office 0 0)]
-      (is (= (visited-location) (aget office 0 0))))))
+      (is (= (visited-location) (aget visited-office 0 0))))))
