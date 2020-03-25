@@ -2,13 +2,17 @@
   (:gen-class)
   (:require [clojure.pprint :as pp]))
 
-(defrecord Location [occupied?])
+(defrecord Location [occupied? has-twer?])
+
+(defn empty-location [] (->Location false false))
+(defn populated-location [] (->Location true false))
+(defn twer-location [] (->Location true true))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (->Location true))
-        unpopulated-desks (repeat (- office-size number-colleagues) (->Location false))]
+        populated-desks (repeat number-colleagues (populated-location))
+        unpopulated-desks (repeat (- office-size number-colleagues) (empty-location))]
     (to-array-2d (partition desks-per-row (shuffle (concat populated-desks unpopulated-desks))))))
 
 (defn count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
