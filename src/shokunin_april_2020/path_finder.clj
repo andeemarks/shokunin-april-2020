@@ -5,6 +5,10 @@
 (defn path-exists? [office]
   true)
 
+(defn- mark-location-as-visited [office row column]
+  (aset office row column (visited-location))
+  office)
+
 ; Flood-fill (node, target-color, replacement-color):
 ;  1. If target-color is equal to replacement-color, return.
 ;  2. ElseIf the color of node is not equal to target-color, return.
@@ -17,5 +21,5 @@
 (defn flood-fill [office current-row current-column]
   (let [current-location (aget office current-row current-column)]
     (if (visitable? current-location)
-        (aset office current-row current-column (visited-location)))
-    office))
+      (mark-location-as-visited office current-row current-column)
+      office)))
