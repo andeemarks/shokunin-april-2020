@@ -12,6 +12,11 @@
           populated-office-2 (populate-office 3 3 0.4)]
       (is (not (= populated-office-1 populated-office-2)))))
 
+  (testing "randomly located the TWers in the back row of desks"
+    (is (= 0 (:row (find-twer (populate-office 2 5 0.4)))))
+    (is (= 0 (:row (find-twer (populate-office 10 10 0.5)))))
+    (is (= 0 (:row (find-twer (populate-office 25 40 0.8))))))
+
   (testing "populates the office according to the p value"
     (is (= (count-population (populate-office 2 5 0.4)) 4))
     (is (= (count-population (populate-office 10 10 0.2)) 20))

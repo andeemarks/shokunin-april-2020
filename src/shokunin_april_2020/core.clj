@@ -20,6 +20,10 @@
 (defn count-population [office]
   (reduce + (map #(count-occupied-in-row %) office)))
 
+(defn find-twer [office]
+  (let [back-row (aget office 0)])
+  {:row 1 :column 2})
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
