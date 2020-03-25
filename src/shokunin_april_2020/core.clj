@@ -1,24 +1,19 @@
 (ns shokunin-april-2020.core
   (:gen-class)
-  (:require [clojure.pprint :as pp]))
-
-(defrecord Location [occupied? has-twer?])
-
-(defn- empty-location [] (->Location false false))
-(defn- populated-location [] (->Location true false))
-(defn- twer-location [] (->Location false true))
+  (:require [clojure.pprint :as pp]
+            [shokunin-april-2020.location :as loc]))
 
 (defn- populate-twer [office]
   (let [row-width (count (aget office 0))
         twer-desk-index (rand-int row-width)]
-    (aset office 0 twer-desk-index (twer-location))
+    (aset office 0 twer-desk-index (loc/twer-location))
     office))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (populated-location))
-        unpopulated-desks (repeat (- office-size number-colleagues) (empty-location))
+        populated-desks (repeat number-colleagues (loc/populated-location))
+        unpopulated-desks (repeat (- office-size number-colleagues) (loc/empty-location))
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)
         desks-in-rows (partition desks-per-row random-desks)]
