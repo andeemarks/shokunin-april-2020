@@ -28,13 +28,16 @@
           :south {:row (dec row) :column column}
           :east {:row row :column (inc column)}
           :west {:row row :column (dec column)})]
-    (if (or
-         (> 0 (:row neighbour-coordinates))
-         (> 0 (:column neighbour-coordinates))
-         (<= (alength office) (:row neighbour-coordinates))
-         (<= (alength (aget office 0)) (:column neighbour-coordinates)))
-      nil
-      neighbour-coordinates)))
+    (if (location-exists? office (:row neighbour-coordinates) (:column neighbour-coordinates))
+      neighbour-coordinates
+      nil)))
+
+(declare flood-fill) ; needed because of cyclic call relationship between flood-fill and visit-neighbour
+
+(defn- visit-neighbour [office current-row current-column direction]
+  (let [neighbour (neighbour office current-row current-column direction)]
+    (when (not (nil? neighbour))
+      (flood-fill office (:row neighbour) (:column neighbour)))))
 
 ; Flood-fill (node, target-color, replacement-color):
 ;  1. If target-color is equal to replacement-color, return.
@@ -49,5 +52,10 @@
   (let [current-location (aget office current-row current-column)]
     (if (visitable? current-location)
       (do
-        (mark-location-as-visited office current-row current-column))
+        (mark-location-as-visited office current-row current-column)
+        ; (visit-neighbour office current-row current-column :north)
+        ; (visit-neighbour office current-row current-column :south)
+        ; (visit-neighbour office current-row current-column :east)
+        ; (visit-neighbour office current-row current-column :west)
+        )
       office)))
