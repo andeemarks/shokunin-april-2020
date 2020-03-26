@@ -21,15 +21,8 @@
   office)
 
 (defn neighbour [office coordinate direction]
-  (let [row (:row coordinate)
-        column (:column coordinate)
-        neighbour-coordinates
-        (case direction
-          :north (->Coordinate (inc row) column)
-          :south (->Coordinate (dec row) column)
-          :east (->Coordinate row (inc column))
-          :west (->Coordinate row (dec column)))]
-    (if (within-office? office neighbour-coordinates)
+  (let [neighbour-coordinates (neighbour-in-direction coordinate direction)]
+    (if (within-office? neighbour-coordinates office)
       neighbour-coordinates
       nil)))
 
