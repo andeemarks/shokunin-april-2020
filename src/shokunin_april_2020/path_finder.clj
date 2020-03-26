@@ -1,7 +1,11 @@
 (ns shokunin-april-2020.path-finder
-  (:require [shokunin-april-2020.location :refer :all]))
+  (:require [shokunin-april-2020.location :refer :all]
+            [clojure.tools.logging :as log]))
 
 (defn- count-visited-in-row [row] (count (filter #(:visited? %) row)))
+
+(defn count-visited [office]
+  (reduce + (map #(count-visited-in-row %) office)))
 
 (defn- path-to-first-row-found? [first-row]
   (not (= 0 (count-visited-in-row first-row))))
@@ -51,12 +55,12 @@
 ;  5. Return.
 (defn flood-fill [office current-row current-column]
   (let [current-location (aget office current-row current-column)]
-    (if (visitable? current-location)
+    (when (visitable? current-location)
       (do
         (mark-location-as-visited office current-row current-column)
-        ; (visit-neighbour office current-row current-column :north)
-        ; (visit-neighbour office current-row current-column :south)
-        ; (visit-neighbour office current-row current-column :east)
-        ; (visit-neighbour office current-row current-column :west)
-        )
-      office)))
+        (visit-neighbour office current-row current-column :north)
+        (visit-neighbour office current-row current-column :south)
+        (visit-neighbour office current-row current-column :east)
+        (visit-neighbour office current-row current-column :west)
+        ))
+    office))

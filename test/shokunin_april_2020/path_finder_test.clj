@@ -43,6 +43,16 @@
       (is (thrown? IllegalArgumentException (neighbour office 1 1 :up))))))
 
 (deftest flood-filling
+  (testing "an empty office is completely filled"
+    (let [office (populate-office 10 10 0.0)
+          visited-office (flood-fill office 0 0)]
+      (is (= 100 (count-visited visited-office)))))
+
+  (testing "a fully occupied office is completely unfilled"
+    (let [office (populate-office 10 10 1.0)
+          visited-office (flood-fill office 0 0)]
+      (is (= 0 (count-visited visited-office)))))
+
   (testing "visiting an already visited location does nothing"
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (visited-location))
