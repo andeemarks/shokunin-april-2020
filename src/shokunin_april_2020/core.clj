@@ -3,7 +3,7 @@
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.location :as loc]))
 
-(defn- populate-twer [office]
+(defn- populate-twer! [office]
   (let [row-width (count (aget office 0))
         twer-desk-index (rand-int row-width)]
     (aset office 0 twer-desk-index (loc/twer-location))
@@ -17,7 +17,7 @@
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)
         desks-in-rows (partition desks-per-row random-desks)]
-    (populate-twer (to-array-2d desks-in-rows))))
+    (populate-twer! (to-array-2d desks-in-rows))))
 
 (defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
 
