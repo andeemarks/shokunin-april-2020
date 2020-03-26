@@ -20,13 +20,6 @@
   (aset office (:row coordinate) (:column coordinate) (visited-location))
   office)
 
-(defn- location-exists? [office coordinate]
-  (let [max-row (dec (alength office))
-        max-column (dec (alength (aget office 0)))]
-    (and
-     (<= 0 (:row coordinate) max-row)
-     (<= 0 (:column coordinate) max-column))))
-
 (defn neighbour [office coordinate direction]
   (let [row (:row coordinate)
         column (:column coordinate)
@@ -36,7 +29,7 @@
           :south (->Coordinate (dec row) column)
           :east (->Coordinate row (inc column))
           :west (->Coordinate row (dec column)))]
-    (if (location-exists? office neighbour-coordinates)
+    (if (within-office? office neighbour-coordinates)
       neighbour-coordinates
       nil)))
 
