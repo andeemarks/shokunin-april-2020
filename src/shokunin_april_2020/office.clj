@@ -1,5 +1,5 @@
 (ns shokunin-april-2020.office
-  (:require [shokunin-april-2020.location :refer :all]
+  (:require [shokunin-april-2020.location :as loc]
             [clojure.tools.logging :as log]))
 
 (defn from-desks [desks desks-per-row]
@@ -11,15 +11,15 @@
 
 (defn mark-location-as-visited! [office coordinate]
   ; (log/infof "Marking %d %d as visited" row column)
-  (mark-as office coordinate (visited-location))
+  (mark-as office coordinate (loc/visited-location))
   office)
 
 (defn mark-location-as-populated! [office coordinate]
-  (mark-as office coordinate (populated-location))
+  (mark-as office coordinate (loc/populated-location))
   office)
 
 (defn mark-location-as-empty! [office coordinate]
-  (mark-as office coordinate (empty-location))
+  (mark-as office coordinate (loc/empty-location))
   office)
 
 (defn width [office] (alength (aget office 0)))
@@ -30,7 +30,7 @@
 
 (defn populate-twer! [office]
   (let [twer-desk-index (rand-int (width office))]
-    (aset office 0 twer-desk-index (twer-location))
+    (aset office 0 twer-desk-index (loc/twer-location))
     office))
 
 (defn- index-if-twer [row current-index]
