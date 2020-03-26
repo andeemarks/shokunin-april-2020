@@ -14,6 +14,14 @@
   (aset office row column (visited-location))
   office)
 
+(defn neighbour [office row column direction]
+  (case direction
+    :north (aget office (inc row) column)
+    :south (aget office (dec row) column)
+    :east (aget office row (inc column))
+    :west (aget office row (dec column))
+    ))
+
 ; Flood-fill (node, target-color, replacement-color):
 ;  1. If target-color is equal to replacement-color, return.
 ;  2. ElseIf the color of node is not equal to target-color, return.

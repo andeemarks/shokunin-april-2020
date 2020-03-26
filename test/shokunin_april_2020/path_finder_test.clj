@@ -14,6 +14,31 @@
     (let [office (populate-office 2 2 0.0)]
       (is (= false (path-exists? office))))))
 
+(deftest finding-neighbours
+  (testing "northern neighbour returned when one exists"
+    (let [office (populate-office 3 3 1)
+          _ (aset office 2 1 (empty-location))]
+      (is (= (empty-location) (neighbour office 1 1 :north)))))
+
+  (testing "southern neighbour returned when one exists"
+    (let [office (populate-office 3 3 1)
+          _ (aset office 0 1 (empty-location))]
+      (is (= (empty-location) (neighbour office 1 1 :south)))))
+
+  (testing "western neighbour returned when one exists"
+    (let [office (populate-office 3 3 1)
+          _ (aset office 1 0 (empty-location))]
+      (is (= (empty-location) (neighbour office 1 1 :west)))))
+
+  (testing "eastern neighbour returned when one exists"
+    (let [office (populate-office 3 3 1)
+          _ (aset office 1 2 (empty-location))]
+      (is (= (empty-location) (neighbour office 1 1 :east)))))
+
+  (testing "invalid directions generate errors"
+    (let [office (populate-office 3 3 1)]
+      (is (thrown? IllegalArgumentException (neighbour office 1 1 :up))))))
+
 (deftest flood-filling
   (testing "visiting an already visited location does nothing"
     (let [office (populate-office 2 2 0.0)
