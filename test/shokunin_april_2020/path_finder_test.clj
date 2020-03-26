@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [shokunin-april-2020.core :refer :all]
             [shokunin-april-2020.location :refer :all]
+            [shokunin-april-2020.coordinate :refer :all]
             [shokunin-april-2020.path-finder :refer :all]))
 
 (deftest path-finding
@@ -17,19 +18,19 @@
 (deftest finding-neighbours
   (testing "northern neighbour returned when one exists"
     (let [office (populate-office 3 3 1)]
-      (is (= {:row 2 :column 1} (neighbour office 1 1 :north)))))
+      (is (= (->Coordinate 2 1) (neighbour office 1 1 :north)))))
 
   (testing "southern neighbour returned when one exists"
     (let [office (populate-office 3 3 1)]
-      (is (= {:row 0 :column 1} (neighbour office 1 1 :south)))))
+      (is (= (->Coordinate 0 1) (neighbour office 1 1 :south)))))
 
   (testing "western neighbour returned when one exists"
     (let [office (populate-office 3 3 1)]
-      (is (= {:row 1 :column 0} (neighbour office 1 1 :west)))))
+      (is (= (->Coordinate 1 0) (neighbour office 1 1 :west)))))
 
   (testing "eastern neighbour returned when one exists"
     (let [office (populate-office 3 3 1)]
-      (is (= {:row 1 :column 2} (neighbour office 1 1 :east)))))
+      (is (= (->Coordinate 1 2) (neighbour office 1 1 :east)))))
 
   (testing "nil returned when neighbour requested beyond office boundary"
     (let [office (populate-office 1 1 1)]

@@ -16,7 +16,7 @@
     (path-to-first-row-found? first-row)))
 
 (defn- mark-location-as-visited! [office row column]
-  (log/infof "Marking %d %d as visited" row column)
+  ; (log/infof "Marking %d %d as visited" row column)
   (aset office row column (visited-location))
   office)
 
@@ -30,10 +30,10 @@
 (defn neighbour [office row column direction]
   (let [neighbour-coordinates
         (case direction
-          :north {:row (inc row) :column column}
-          :south {:row (dec row) :column column}
-          :east {:row row :column (inc column)}
-          :west {:row row :column (dec column)})]
+          :north (->Coordinate (inc row) column)
+          :south (->Coordinate (dec row) column)
+          :east (->Coordinate row (inc column))
+          :west (->Coordinate row (dec column)))]
     (if (location-exists? office (:row neighbour-coordinates) (:column neighbour-coordinates))
       neighbour-coordinates
       nil)))
@@ -54,6 +54,5 @@
         (visit-neighbour office current-row current-column :north)
         (visit-neighbour office current-row current-column :south)
         (visit-neighbour office current-row current-column :east)
-        (visit-neighbour office current-row current-column :west)
-        ))
+        (visit-neighbour office current-row current-column :west)))
     office))
