@@ -15,9 +15,9 @@
   (let [first-row (aget office (dec (alength office)))]
     (path-to-first-row-found? first-row)))
 
-(defn- mark-location-as-visited! [office row column]
+(defn- mark-location-as-visited! [office coordinate]
   ; (log/infof "Marking %d %d as visited" row column)
-  (aset office row column (visited-location))
+  (aset office (:row coordinate) (:column coordinate) (visited-location))
   office)
 
 (defn- location-exists? [office coordinate]
@@ -27,8 +27,10 @@
      (<= 0 (:row coordinate) max-row)
      (<= 0 (:column coordinate) max-column))))
 
-(defn neighbour [office row column direction]
-  (let [neighbour-coordinates
+(defn neighbour [office coordinate direction]
+  (let [row (:row coordinate)
+        column (:column coordinate)
+        neighbour-coordinates
         (case direction
           :north (->Coordinate (inc row) column)
           :south (->Coordinate (dec row) column)
@@ -40,19 +42,19 @@
 
 (declare flood-fill) ; needed because of cyclic call relationship between flood-fill and visit-neighbour
 
-(defn- visit-neighbour [office current-row current-column direction]
-  (let [neighbour (neighbour office current-row current-column direction)]
+(defn- visit-neighbour [office current-coordinate direction]
+  (let [neighbour (neighbour office current-coordinate direction)]
     (when (not (nil? neighbour))
-      (flood-fill office (:row neighbour) (:column neighbour)))))
+      (flood-fill office neighbour))))
 
 ; Taken from stack-based recursive algo at https://en.wikipedia.org/wiki/Flood_fill
-(defn flood-fill [office current-row current-column]
-  (let [current-location (aget office current-row current-column)]
+(defn flood-fill [office current-coordinate]
+  (let [current-location (aget office (:row current-coordinate) (:column current-coordinate))]
     (when (visitable? current-location)
       (do
-        (mark-location-as-visited! office current-row current-column)
-        (visit-neighbour office current-row current-column :north)
-        (visit-neighbour office current-row current-column :south)
-        (visit-neighbour office current-row current-column :east)
-        (visit-neighbour office current-row current-column :west)))
+        (mark-location-as-visited! office current-coordinate)
+        (visit-neighbour office current-coordinate :north)
+        (visit-neighbour office current-coordinate :south)
+        (visit-neighbour office current-coordinate :east)
+        (visit-neighbour office current-coordinate :west)))
     office))
