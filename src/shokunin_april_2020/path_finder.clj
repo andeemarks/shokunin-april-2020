@@ -1,6 +1,7 @@
 (ns shokunin-april-2020.path-finder
   (:require [shokunin-april-2020.location :refer :all]
             [shokunin-april-2020.coordinate :refer :all]
+            [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
 
 (defn- count-visited-in-row [row] (count (filter #(:visited? %) row)))
@@ -12,13 +13,7 @@
   (not (= 0 (count-visited-in-row first-row))))
 
 (defn path-exists? [office]
-  (let [first-row (aget office (dec (alength office)))]
-    (path-to-first-row-found? first-row)))
-
-(defn- mark-location-as-visited! [office coordinate]
-  ; (log/infof "Marking %d %d as visited" row column)
-  (aset office (:row coordinate) (:column coordinate) (visited-location))
-  office)
+  (path-to-first-row-found? (office/first-row office)))
 
 (defn neighbour [office coordinate direction]
   (let [neighbour-coordinates (neighbour-in-direction coordinate direction)]
@@ -38,7 +33,7 @@
   (let [current-location (aget office (:row current-coordinate) (:column current-coordinate))]
     (when (visitable? current-location)
       (do
-        (mark-location-as-visited! office current-coordinate)
+        (office/mark-location-as-visited! office current-coordinate)
         (visit-neighbour office current-coordinate :north)
         (visit-neighbour office current-coordinate :south)
         (visit-neighbour office current-coordinate :east)
