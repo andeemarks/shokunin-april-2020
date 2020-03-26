@@ -1,6 +1,6 @@
 (ns shokunin-april-2020.path-finder
-  (:require [shokunin-april-2020.location :refer :all]
-            [shokunin-april-2020.coordinate :refer :all]
+  (:require [shokunin-april-2020.location :as loc]
+            [shokunin-april-2020.coordinate :as coord :refer (->Coordinate)]
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
 
@@ -16,8 +16,8 @@
   (path-to-first-row-found? (office/first-row office)))
 
 (defn neighbour [office coordinate direction]
-  (let [neighbour-coordinates (neighbour-in-direction coordinate direction)]
-    (if (within-office? neighbour-coordinates office)
+  (let [neighbour-coordinates (coord/neighbour-in-direction coordinate direction)]
+    (if (coord/within-office? neighbour-coordinates office)
       neighbour-coordinates
       nil)))
 
@@ -31,7 +31,7 @@
 ; Taken from stack-based recursive algo at https://en.wikipedia.org/wiki/Flood_fill
 (defn flood-fill [office current-coordinate]
   (let [current-location (office/location-at office current-coordinate)]
-    (when (visitable? current-location)
+    (when (loc/visitable? current-location)
       (do
         (office/mark-location-as-visited! office current-coordinate)
         (visit-neighbour office current-coordinate :north)
