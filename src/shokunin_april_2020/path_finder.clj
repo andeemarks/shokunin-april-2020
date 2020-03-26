@@ -11,6 +11,7 @@
     (path-to-first-row-found? first-row)))
 
 (defn- mark-location-as-visited [office row column]
+  (log/infof "Marking %d %d as visited" row column)
   (aset office row column (visited-location))
   office)
 
