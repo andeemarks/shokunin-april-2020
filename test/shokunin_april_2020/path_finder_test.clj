@@ -9,7 +9,7 @@
 (deftest path-finding
   (testing "path found when visited location found in first row"
     (let [office (populate-office 2 2 0.0)
-          _ (aset office 1 0 (visited-location))]
+          _ (mark-location-as-visited! office (->Coordinate 1 0))]
       (is (= true (path-exists? office)))))
 
   (testing "path not found when no visited location found in first row"
@@ -57,7 +57,7 @@
 
   (testing "visiting an already visited location does nothing"
     (let [office (populate-office 2 2 0.0)
-          _ (aset office 0 0 (visited-location))
+          _ (mark-location-as-visited! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
       (is (= (visited-location) (location-at visited-office (->Coordinate 0 0))))))
 
