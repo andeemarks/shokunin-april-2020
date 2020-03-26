@@ -16,24 +16,20 @@
 
 (deftest finding-neighbours
   (testing "northern neighbour returned when one exists"
-    (let [office (populate-office 3 3 1)
-          _ (aset office 2 1 (empty-location))]
-      (is (= (empty-location) (neighbour office 1 1 :north)))))
+    (let [office (populate-office 3 3 1)]
+      (is (= {:row 2 :column 1} (neighbour office 1 1 :north)))))
 
   (testing "southern neighbour returned when one exists"
-    (let [office (populate-office 3 3 1)
-          _ (aset office 0 1 (empty-location))]
-      (is (= (empty-location) (neighbour office 1 1 :south)))))
+    (let [office (populate-office 3 3 1)]
+      (is (= {:row 0 :column 1} (neighbour office 1 1 :south)))))
 
   (testing "western neighbour returned when one exists"
-    (let [office (populate-office 3 3 1)
-          _ (aset office 1 0 (empty-location))]
-      (is (= (empty-location) (neighbour office 1 1 :west)))))
+    (let [office (populate-office 3 3 1)]
+      (is (= {:row 1 :column 0} (neighbour office 1 1 :west)))))
 
   (testing "eastern neighbour returned when one exists"
-    (let [office (populate-office 3 3 1)
-          _ (aset office 1 2 (empty-location))]
-      (is (= (empty-location) (neighbour office 1 1 :east)))))
+    (let [office (populate-office 3 3 1)]
+      (is (= {:row 1 :column 2} (neighbour office 1 1 :east)))))
 
   (testing "nil returned when neighbour requested beyond office boundary"
     (let [office (populate-office 1 1 1)]
