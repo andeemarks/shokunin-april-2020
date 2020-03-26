@@ -2,9 +2,21 @@
   (:require [shokunin-april-2020.location :refer :all]
             [clojure.tools.logging :as log]))
 
+(defn- mark-as [office coordinate location]
+  (aset office (:row coordinate) (:column coordinate) location)
+  office)
+
 (defn mark-location-as-visited! [office coordinate]
   ; (log/infof "Marking %d %d as visited" row column)
-  (aset office (:row coordinate) (:column coordinate) (visited-location))
+  (mark-as office coordinate (visited-location))
+  office)
+
+(defn mark-location-as-populated! [office coordinate]
+  (mark-as office coordinate (populated-location))
+  office)
+
+(defn mark-location-as-empty! [office coordinate]
+  (mark-as office coordinate (empty-location))
   office)
 
 (defn width [office] (alength (aget office 0)))

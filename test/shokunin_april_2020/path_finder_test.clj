@@ -63,12 +63,12 @@
 
   (testing "visiting an occupied location does nothing"
     (let [office (populate-office 2 2 0.0)
-          _ (aset office 0 0 (populated-location))
+          _ (mark-location-as-populated! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
       (is (= (populated-location) (location-at visited-office (->Coordinate 0 0))))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (populate-office 2 2 0.0)
-          _ (aset office 0 0 (empty-location))
+          _ (mark-location-as-empty! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
       (is (= (visited-location) (location-at visited-office (->Coordinate 0 0)))))))
