@@ -10,3 +10,4 @@
 (defn width [office] (alength (aget office 0)))
 (defn depth [office] (alength office))
 (defn first-row [office] (aget office (dec (depth office))))
+(defn location-at [office coordinate] (aget office (:row coordinate) (:column coordinate)))

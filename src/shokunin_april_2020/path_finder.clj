@@ -30,7 +30,7 @@
 
 ; Taken from stack-based recursive algo at https://en.wikipedia.org/wiki/Flood_fill
 (defn flood-fill [office current-coordinate]
-  (let [current-location (aget office (:row current-coordinate) (:column current-coordinate))]
+  (let [current-location (office/location-at office current-coordinate)]
     (when (visitable? current-location)
       (do
         (office/mark-location-as-visited! office current-coordinate)
