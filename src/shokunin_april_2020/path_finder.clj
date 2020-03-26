@@ -1,5 +1,6 @@
 (ns shokunin-april-2020.path-finder
   (:require [shokunin-april-2020.location :refer :all]
+            [shokunin-april-2020.coordinate :refer :all]
             [clojure.tools.logging :as log]))
 
 (defn- count-visited-in-row [row] (count (filter #(:visited? %) row)))
