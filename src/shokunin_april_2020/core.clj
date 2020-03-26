@@ -10,14 +10,8 @@
         populated-desks (repeat number-colleagues (loc/populated-location))
         unpopulated-desks (repeat (- office-size number-colleagues) (loc/empty-location))
         all-desks (concat populated-desks unpopulated-desks)
-        random-desks (shuffle all-desks)
-        desks-in-rows (partition desks-per-row random-desks)]
-    (office/populate-twer! (to-array-2d desks-in-rows))))
-
-(defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
-
-(defn count-population [office]
-  (reduce + (map #(count-occupied-in-row %) office)))
+        random-desks (shuffle all-desks)]
+    (office/populate-twer! (office/from-desks random-desks desks-per-row))))
 
 (defn -main
   "I don't do a whole lot ... yet."

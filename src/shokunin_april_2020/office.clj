@@ -2,6 +2,9 @@
   (:require [shokunin-april-2020.location :refer :all]
             [clojure.tools.logging :as log]))
 
+(defn from-desks [desks desks-per-row]
+  (to-array-2d (partition desks-per-row desks)))
+
 (defn- mark-as [office coordinate location]
   (aset office (:row coordinate) (:column coordinate) location)
   office)
@@ -36,6 +39,11 @@
     0))
 
 (defn find-twer [office]
-  (let [back-row (last-row office)
-        index-of-twer (areduce back-row i ret 0 (+ ret (index-if-twer back-row i)))]
+  (let [last-row (last-row office)
+        index-of-twer (areduce last-row i ret 0 (+ ret (index-if-twer last-row i)))]
     {:row 0 :column index-of-twer}))
+
+(defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
+
+(defn count-population [office]
+  (reduce + (map #(count-occupied-in-row %) office)))
