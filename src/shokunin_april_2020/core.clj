@@ -1,11 +1,11 @@
 (ns shokunin-april-2020.core
   (:gen-class)
   (:require [clojure.pprint :as pp]
+            [shokunin-april-2020.office :as office]
             [shokunin-april-2020.location :as loc]))
 
 (defn- populate-twer! [office]
-  (let [row-width (count (aget office 0))
-        twer-desk-index (rand-int row-width)]
+  (let [twer-desk-index (rand-int (office/width office))]
     (aset office 0 twer-desk-index (loc/twer-location))
     office))
 
@@ -30,7 +30,7 @@
     0))
 
 (defn find-twer [office]
-  (let [back-row (aget office 0)
+  (let [back-row (office/last-row office)
         index-of-twer (areduce back-row i ret 0 (+ ret (index-if-twer back-row i)))]
     {:row 0 :column index-of-twer}))
 

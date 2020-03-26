@@ -3,6 +3,7 @@
             [shokunin-april-2020.core :refer :all]
             [shokunin-april-2020.location :refer :all]
             [shokunin-april-2020.coordinate :refer :all]
+            [shokunin-april-2020.office :refer :all]
             [shokunin-april-2020.path-finder :refer :all]))
 
 (deftest path-finding
@@ -58,16 +59,16 @@
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (visited-location))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (visited-location) (aget visited-office 0 0)))))
+      (is (= (visited-location) (location-at visited-office (->Coordinate 0 0))))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (populated-location))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (populated-location) (aget visited-office 0 0)))))
+      (is (= (populated-location) (location-at visited-office (->Coordinate 0 0))))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (populate-office 2 2 0.0)
           _ (aset office 0 0 (empty-location))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (visited-location) (aget visited-office 0 0))))))
+      (is (= (visited-location) (location-at visited-office (->Coordinate 0 0)))))))
