@@ -4,11 +4,6 @@
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.location :as loc]))
 
-(defn- populate-twer! [office]
-  (let [twer-desk-index (rand-int (office/width office))]
-    (aset office 0 twer-desk-index (loc/twer-location))
-    office))
-
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
@@ -17,7 +12,7 @@
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)
         desks-in-rows (partition desks-per-row random-desks)]
-    (populate-twer! (to-array-2d desks-in-rows))))
+    (office/populate-twer! (to-array-2d desks-in-rows))))
 
 (defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
 

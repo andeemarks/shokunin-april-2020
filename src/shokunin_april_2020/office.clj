@@ -12,3 +12,8 @@
 (defn first-row [office] (aget office (dec (depth office))))
 (defn last-row [office] (aget office 0))
 (defn location-at [office coordinate] (aget office (:row coordinate) (:column coordinate)))
+
+(defn populate-twer! [office]
+  (let [twer-desk-index (rand-int (width office))]
+    (aset office 0 twer-desk-index (twer-location))
+    office))
