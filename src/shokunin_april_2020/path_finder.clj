@@ -14,6 +14,13 @@
   (aset office row column (visited-location))
   office)
 
+(defn- location-exists? [office row column]
+  (let [max-row (dec (alength office))
+        max-column (dec (alength (aget office 0)))]
+    (and
+     (<= 0 row max-row)
+     (<= 0 column max-column))))
+
 (defn neighbour [office row column direction]
   (let [neighbour-coordinates
         (case direction
