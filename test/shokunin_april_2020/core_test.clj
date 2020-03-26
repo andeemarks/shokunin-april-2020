@@ -4,6 +4,7 @@
             [clojure.test.check :as tc]
             [clojure.test.check.properties :as prop]
             [clojure.test.check.clojure-test :as test]
+            [shokunin-april-2020.office :refer :all]
             [shokunin-april-2020.core :refer :all]))
 
 (test/defspec twer-always-in-back-row

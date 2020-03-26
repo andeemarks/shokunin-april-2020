@@ -17,3 +17,13 @@
   (let [twer-desk-index (rand-int (width office))]
     (aset office 0 twer-desk-index (twer-location))
     office))
+
+(defn- index-if-twer [row current-index]
+  (if (:has-twer? (aget row current-index))
+    current-index
+    0))
+
+(defn find-twer [office]
+  (let [back-row (last-row office)
+        index-of-twer (areduce back-row i ret 0 (+ ret (index-if-twer back-row i)))]
+    {:row 0 :column index-of-twer}))
