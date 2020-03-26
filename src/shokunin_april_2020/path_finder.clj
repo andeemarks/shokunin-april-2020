@@ -15,12 +15,16 @@
   office)
 
 (defn neighbour [office row column direction]
-  (case direction
-    :north (aget office (inc row) column)
-    :south (aget office (dec row) column)
-    :east (aget office row (inc column))
-    :west (aget office row (dec column))
-    ))
+  (try
+    (case direction
+      :north (aget office (inc row) column)
+      :south (aget office (dec row) column)
+      :east (aget office row (inc column))
+      :west (aget office row (dec column)))
+    (catch java.lang.ArrayIndexOutOfBoundsException e
+        ; TODO Technically, this is not an exceptional situation: it is anticipated.
+        ; I cannot think of a more elegant way to detect it though :-
+      nil)))
 
 ; Flood-fill (node, target-color, replacement-color):
 ;  1. If target-color is equal to replacement-color, return.

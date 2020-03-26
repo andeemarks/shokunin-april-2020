@@ -35,6 +35,13 @@
           _ (aset office 1 2 (empty-location))]
       (is (= (empty-location) (neighbour office 1 1 :east)))))
 
+  (testing "nil returned when neighbour requested beyond office boundary"
+    (let [office (populate-office 1 1 1)]
+      (is (nil? (neighbour office 0 0 :east)))
+      (is (nil? (neighbour office 0 0 :west)))
+      (is (nil? (neighbour office 0 0 :south)))
+      (is (nil? (neighbour office 0 0 :north)))))
+
   (testing "invalid directions generate errors"
     (let [office (populate-office 3 3 1)]
       (is (thrown? IllegalArgumentException (neighbour office 1 1 :up))))))
