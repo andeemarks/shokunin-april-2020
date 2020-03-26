@@ -14,7 +14,7 @@
   (let [first-row (aget office (dec (alength office)))]
     (path-to-first-row-found? first-row)))
 
-(defn- mark-location-as-visited [office row column]
+(defn- mark-location-as-visited! [office row column]
   (log/infof "Marking %d %d as visited" row column)
   (aset office row column (visited-location))
   office)
@@ -49,7 +49,7 @@
   (let [current-location (aget office current-row current-column)]
     (when (visitable? current-location)
       (do
-        (mark-location-as-visited office current-row current-column)
+        (mark-location-as-visited! office current-row current-column)
         (visit-neighbour office current-row current-column :north)
         (visit-neighbour office current-row current-column :south)
         (visit-neighbour office current-row current-column :east)
