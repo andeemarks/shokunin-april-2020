@@ -59,16 +59,16 @@
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-visited! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/visited-location) (loc/location-at visited-office (->Coordinate 0 0))))))
+      (is (= (loc/visited-location) (office/location-at visited-office (->Coordinate 0 0))))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-populated! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/populated-location) (loc/location-at visited-office (->Coordinate 0 0))))))
+      (is (= (loc/populated-location) (office/location-at visited-office (->Coordinate 0 0))))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-empty! office (->Coordinate 0 0))
           visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/visited-location) (loc/location-at visited-office (->Coordinate 0 0)))))))
+      (is (= (loc/visited-location) (office/location-at visited-office (->Coordinate 0 0)))))))
