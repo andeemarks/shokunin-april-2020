@@ -41,4 +41,4 @@
     office))
 
   (defn try-find-path [office]
-    (flood-fill office (office/find-twer)))
+    (flood-fill office (office/find-twer office)))
