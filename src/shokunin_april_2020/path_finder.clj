@@ -39,3 +39,6 @@
         (visit-neighbour office current-coordinate :east)
         (visit-neighbour office current-coordinate :west)))
     office))
+
+  (defn try-find-path [office]
+    (flood-fill office (office/find-twer)))
