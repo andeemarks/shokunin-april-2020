@@ -50,6 +50,4 @@
 
 (defn to-string [office]
   (doseq [row office]
-    (doseq [desk row]
-      (print desk))
-    (println)))
+    (println (apply pr-str row))))
