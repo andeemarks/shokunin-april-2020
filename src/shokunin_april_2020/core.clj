@@ -2,7 +2,7 @@
   (:gen-class)
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.office :as office]
-            [shokunin-april-2020.location :as loc]))
+            [shokunin-april-2020.location :as loc :refer (->Location)]))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
@@ -16,4 +16,8 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (pp/pprint (populate-office 10 10 0.5)))
+  (pp/pprint (populate-office 10 10 0.5))
+  (println (loc/empty-location))
+  (println (loc/populated-location))
+  (println (loc/twer-location))
+  (println (loc/visited-location)))
