@@ -23,18 +23,22 @@
   (count (filter #(office-has-path? population-factor %) (range 1 sample-count))))
 
 (defn run-sample [population-factor sample-count]
-  (println (str "For p of " population-factor " # of offices with paths = " (offices-with-paths population-factor sample-count))))
+  (let [offices-with-paths (offices-with-paths population-factor sample-count)]
+    (println (str "For p of " population-factor " % of offices with paths = " (/ offices-with-paths sample-count)))))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (run-sample 0.1 1000)
-  (run-sample 0.2 1000)
-  (run-sample 0.3 1000)
-  (run-sample 0.4 1000)
-  (run-sample 0.5 1000)
-  (run-sample 0.6 1000)
-  (run-sample 0.7 1000)
-  (run-sample 0.8 1000)
-  (run-sample 0.9 1000)
-  (run-sample 1.0 1000))
+  (let [sample-size (Integer/parseInt (or (first args) "1000"))
+    _ (println (str "Running with sample size of " sample-size))]
+    (run-sample 0.0 sample-size)
+    (run-sample 0.1 sample-size)
+    (run-sample 0.2 sample-size)
+    (run-sample 0.3 sample-size)
+    (run-sample 0.4 sample-size)
+    (run-sample 0.5 sample-size)
+    (run-sample 0.6 sample-size)
+    (run-sample 0.7 sample-size)
+    (run-sample 0.8 sample-size)
+    (run-sample 0.9 sample-size)
+    (run-sample 1.0 sample-size)))
