@@ -32,14 +32,5 @@
   [& args]
   (let [sample-size (Integer/parseInt (or (first args) "1000"))
         _ (println (str "Running with sample size of " sample-size))]
-    (run-sample 0.0 sample-size)
-    (run-sample 0.1 sample-size)
-    (run-sample 0.2 sample-size)
-    (run-sample 0.3 sample-size)
-    (run-sample 0.4 sample-size)
-    (run-sample 0.5 sample-size)
-    (run-sample 0.6 sample-size)
-    (run-sample 0.7 sample-size)
-    (run-sample 0.8 sample-size)
-    (run-sample 0.9 sample-size)
-    (run-sample 1.0 sample-size)))
+    (doseq [population-factor (range 0.0 1.0 0.1)]
+      (run-sample population-factor sample-size))))
