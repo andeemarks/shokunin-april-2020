@@ -47,3 +47,9 @@
 
 (defn count-population [office]
   (reduce + (map #(count-occupied-in-row %) office)))
+
+(defn to-string [office]
+  (doseq [row office]
+    (doseq [desk row]
+      (print desk))
+    (println)))
