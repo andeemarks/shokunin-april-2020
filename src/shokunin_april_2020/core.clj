@@ -19,18 +19,19 @@
         visited-office (pf/try-find-path office)]
     (pf/path-exists? visited-office)))
 
-(defn offices-with-paths [population-factor sample-count]
-  (count (filter #(office-has-path? population-factor %) (range 1 sample-count))))
+(defn offices-with-paths [population-factor sample-size]
+  (count (filter #(office-has-path? population-factor %) (range 1 sample-size))))
 
-(defn run-sample [population-factor sample-count]
-  (let [offices-with-paths (offices-with-paths population-factor sample-count)]
-    (println (str "For p of " population-factor " % of offices with paths = " (/ offices-with-paths sample-count)))))
+(defn run-sample [population-factor sample-size]
+  (let [offices-with-paths (offices-with-paths population-factor sample-size)
+        offices-paths-percentage (float (/ offices-with-paths sample-size))]
+    (println (format "%.1f -> %.4f " population-factor offices-paths-percentage))))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (let [sample-size (Integer/parseInt (or (first args) "1000"))
-    _ (println (str "Running with sample size of " sample-size))]
+        _ (println (str "Running with sample size of " sample-size))]
     (run-sample 0.0 sample-size)
     (run-sample 0.1 sample-size)
     (run-sample 0.2 sample-size)
