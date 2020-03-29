@@ -9,8 +9,8 @@
 
 (test/defspec twer-always-in-back-row
   100
-  (prop/for-all [number-of-rows gen/s-pos-int
-                 number-of-desks gen/s-pos-int]
+  (prop/for-all [number-of-rows (gen/fmap inc gen/nat)
+                 number-of-desks (gen/fmap inc gen/nat)]
                 (= 0 (:row (office/find-twer (populate-office number-of-rows number-of-desks 1))))))
 
 (deftest office-population
