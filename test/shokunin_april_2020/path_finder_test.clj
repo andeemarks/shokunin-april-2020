@@ -46,7 +46,7 @@
           IllegalArgumentException
           (neighbour office (->Coordinate 1 1) :up))))))
 
-(def origin (->Coordinate 0 0))
+(def ^:const origin (->Coordinate 0 0))
 
 (deftest flood-filling
   (testing "an empty office is completely filled"
