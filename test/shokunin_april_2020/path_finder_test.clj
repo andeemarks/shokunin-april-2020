@@ -42,7 +42,7 @@
 
   (testing "invalid directions generate errors"
     (let [office (core/populate-office 3 3 1)]
-      (is (thrown? IllegalArgumentException (neighbour office 1 1 :up))))))
+      (is (thrown? IllegalArgumentException (neighbour office (->Coordinate 1 1) :up))))))
 
 (deftest flood-filling
   (testing "an empty office is completely filled"
