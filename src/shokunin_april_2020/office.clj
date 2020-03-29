@@ -1,5 +1,5 @@
 (ns shokunin-april-2020.office
-  (:require [shokunin-april-2020.location :as loc]
+  (:require [shokunin-april-2020.desk :as loc]
             [clojure.tools.logging :as log]))
 
 (defn from-desks [desks desks-per-row]

@@ -3,7 +3,7 @@
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :as pf]
-            [shokunin-april-2020.location :as loc :refer (->Location)]))
+            [shokunin-april-2020.desk :as loc :refer (->Desk)]))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
@@ -14,14 +14,12 @@
         random-desks (shuffle all-desks)]
     (office/populate-twer! (office/from-desks random-desks desks-per-row))))
 
-(defn- office-has-path? [population-factor sample-id]
-  (let [office (populate-office 10 10 population-factor)
-        visited-office (pf/try-find-path office)]
-    (pf/path-exists? visited-office)))
+(defn- office-has-path? [office _]
+  (pf/path-exists? (pf/try-find-path office)))
 
 (defn offices-with-paths [population-factor sample-size]
   (count (filter
-          #(office-has-path? population-factor %)
+          #(office-has-path? (populate-office 10 10 population-factor) %)
           (range 1 sample-size))))
 
 (defn run-sample [population-factor sample-size]

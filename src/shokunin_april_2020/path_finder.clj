@@ -1,5 +1,5 @@
 (ns shokunin-april-2020.path-finder
-  (:require [shokunin-april-2020.location :as loc]
+  (:require [shokunin-april-2020.desk :as loc]
             [shokunin-april-2020.coordinate :as coord :refer (->Coordinate)]
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))

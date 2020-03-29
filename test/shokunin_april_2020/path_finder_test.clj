@@ -1,7 +1,7 @@
 (ns shokunin-april-2020.path-finder-test
   (:require [clojure.test :refer :all]
             [shokunin-april-2020.core :as core]
-            [shokunin-april-2020.location :as loc]
+            [shokunin-april-2020.desk :as loc]
             [shokunin-april-2020.coordinate :refer (->Coordinate)]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :refer :all]))
