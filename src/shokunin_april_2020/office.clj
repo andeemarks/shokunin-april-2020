@@ -43,10 +43,10 @@
         index-of-twer (areduce last-row i ret 0 (+ ret (index-if-twer last-row i)))]
     {:row 0 :column index-of-twer}))
 
-(defn- count-occupied-in-row [row] (count (filter #(:occupied? %) row)))
+(defn- count-occupied-in-row [row] (count (filter :occupied? row)))
 
 (defn count-population [office]
-  (reduce + (map #(count-occupied-in-row %) office)))
+  (reduce + (map count-occupied-in-row office)))
 
 (defn to-string [office]
   (doseq [row office]
