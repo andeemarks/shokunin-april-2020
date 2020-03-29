@@ -1,5 +1,5 @@
 (ns shokunin-april-2020.path-finder
-  (:require [shokunin-april-2020.desk :as loc]
+  (:require [shokunin-april-2020.desk :as desk]
             [shokunin-april-2020.coordinate :as coord :refer (->Coordinate)]
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
@@ -31,7 +31,7 @@
 ; Taken from https://en.wikipedia.org/wiki/Flood_fill
 (defn flood-fill [office current-coordinate]
   (let [current-location (office/location-at office current-coordinate)]
-    (when (loc/visitable? current-location)
+    (when (desk/visitable? current-location)
       (office/mark-location-as-visited! office current-coordinate)
       (visit-neighbour office current-coordinate :north)
       (visit-neighbour office current-coordinate :south)

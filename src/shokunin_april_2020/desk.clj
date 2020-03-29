@@ -3,25 +3,25 @@
 
 (defrecord Desk [occupied? has-twer? visited?])
 
-(defn- to-string [loc]
-  (if (:occupied? loc)
+(defn- to-string [desk]
+  (if (:occupied? desk)
     "X"
-    (if (:has-twer? loc)
+    (if (:has-twer? desk)
       "*"
-      (if (:visited? loc)
+      (if (:visited? desk)
         "."
         " "))))
 
-(defmethod print-method Desk [loc ^java.io.Writer writer]
-  (print-method (to-string loc) writer))
+(defmethod print-method Desk [desk ^java.io.Writer writer]
+  (print-method (to-string desk) writer))
 
-(defmethod print-dup Desk [loc ^java.io.Writer writer]
-  (print-dup (to-string loc) writer))
+(defmethod print-dup Desk [desk ^java.io.Writer writer]
+  (print-dup (to-string desk) writer))
 
 (defn empty [] (->Desk false false false))
 (defn populated [] (->Desk true false false))
 (defn twer [] (->Desk false true false))
 (defn visited [] (->Desk false false true))
 
-(defn visitable? [location]
-  (and (not (:visited? location)) (not (:occupied? location))))
+(defn visitable? [desk]
+  (and (not (:visited? desk)) (not (:occupied? desk))))
