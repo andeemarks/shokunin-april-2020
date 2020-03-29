@@ -5,7 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/test.check "1.0.0"]
-                 [org.clojure/tools.logging "0.2.3"]]
+                 [org.clojure/tools.logging "1.0.0"]]
   :main shokunin-april-2020.core
   :middleware [whidbey.plugin/repl-pprint]
   :target-path "target/%s"
