@@ -10,7 +10,7 @@
      (<= 0 (:row coordinate) max-row)
      (<= 0 (:column coordinate) max-column))))
 
-(defn neighbour-in-direction [coordinate direction]
+(defn neighbour [coordinate direction]
   (let [row (:row coordinate)
         column (:column coordinate)]
     (case direction

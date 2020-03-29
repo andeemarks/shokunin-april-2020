@@ -11,9 +11,10 @@
   100
   (prop/for-all [number-of-rows (gen/fmap inc gen/nat)
                  number-of-desks (gen/fmap inc gen/nat)]
-                (= 0 (:row (office/find-twer (populate-office number-of-rows number-of-desks 1))))))
+                (let [office (populate-office number-of-rows number-of-desks 1)]
+                  (= 0 (:row (office/find-twer office))))))
 
-(defn- approx-equals [actual expected tolerance]
+(defn- approx [actual expected tolerance]
   (<= (dec expected) actual (inc expected)))
 
 (deftest office-population
@@ -32,6 +33,6 @@
                 (:column (office/find-twer (populate-office 10 10 0.5)))))))
 
   (testing "populates the office according to the p value"
-    (is (approx-equals (office/count-population (populate-office 2 5 0.4)) 4 1))
-    (is (approx-equals (office/count-population (populate-office 10 10 0.2)) 20 1))
-    (is (approx-equals (office/count-population (populate-office 25 40 0.8)) 800 1))))
+    (is (approx (office/population-size (populate-office 2 5 0.4)) 4 1))
+    (is (approx (office/population-size (populate-office 10 10 0.2)) 20 1))
+    (is (approx (office/population-size (populate-office 25 40 0.8)) 800 1))))

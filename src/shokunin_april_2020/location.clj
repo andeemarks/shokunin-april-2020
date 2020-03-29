@@ -18,10 +18,10 @@
 (defmethod print-dup Location [loc ^java.io.Writer writer]
   (print-dup (to-string loc) writer))
 
-(defn empty-location [] (->Location false false false))
-(defn populated-location [] (->Location true false false))
-(defn twer-location [] (->Location false true false))
-(defn visited-location [] (->Location false false true))
+(defn empty [] (->Location false false false))
+(defn populated [] (->Location true false false))
+(defn twer [] (->Location false true false))
+(defn visited [] (->Location false false true))
 
 (defn visitable? [location]
   (and (not (:visited? location)) (not (:occupied? location))))

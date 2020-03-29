@@ -42,33 +42,37 @@
 
   (testing "invalid directions generate errors"
     (let [office (core/populate-office 3 3 1)]
-      (is (thrown? IllegalArgumentException (neighbour office (->Coordinate 1 1) :up))))))
+      (is (thrown?
+          IllegalArgumentException
+          (neighbour office (->Coordinate 1 1) :up))))))
+
+(def origin (->Coordinate 0 0))
 
 (deftest flood-filling
   (testing "an empty office is completely filled"
     (let [office (core/populate-office 10 10 0.0)
-          visited-office (flood-fill office (->Coordinate 0 0))]
+          visited-office (flood-fill office origin)]
       (is (= 100 (count-visited visited-office)))))
 
   (testing "a fully occupied office is completely unfilled"
     (let [office (core/populate-office 10 10 1.0)
-          visited-office (flood-fill office (->Coordinate 0 0))]
+          visited-office (flood-fill office origin)]
       (is (= 0 (count-visited visited-office)))))
 
   (testing "visiting an already visited location does nothing"
     (let [office (core/populate-office 2 2 0.0)
-          _ (office/mark-location-as-visited! office (->Coordinate 0 0))
-          visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/visited-location) (office/location-at visited-office (->Coordinate 0 0))))))
+          _ (office/mark-location-as-visited! office origin)
+          visited-office (flood-fill office origin)]
+      (is (= (loc/visited) (office/location-at visited-office origin)))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (core/populate-office 2 2 0.0)
-          _ (office/mark-location-as-populated! office (->Coordinate 0 0))
-          visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/populated-location) (office/location-at visited-office (->Coordinate 0 0))))))
+          _ (office/mark-location-as-populated! office origin)
+          visited-office (flood-fill office origin)]
+      (is (= (loc/populated) (office/location-at visited-office origin)))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (core/populate-office 2 2 0.0)
-          _ (office/mark-location-as-empty! office (->Coordinate 0 0))
-          visited-office (flood-fill office (->Coordinate 0 0))]
-      (is (= (loc/visited-location) (office/location-at visited-office (->Coordinate 0 0)))))))
+          _ (office/mark-location-as-empty! office origin)
+          visited-office (flood-fill office origin)]
+      (is (= (loc/visited) (office/location-at visited-office origin))))))

@@ -8,8 +8,8 @@
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (loc/populated-location))
-        unpopulated-desks (repeat (- office-size number-colleagues) (loc/empty-location))
+        populated-desks (repeat number-colleagues (loc/populated))
+        unpopulated-desks (repeat (- office-size number-colleagues) (loc/empty))
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)]
     (office/populate-twer! (office/from-desks random-desks desks-per-row))))
@@ -20,12 +20,17 @@
     (pf/path-exists? visited-office)))
 
 (defn offices-with-paths [population-factor sample-size]
-  (count (filter #(office-has-path? population-factor %) (range 1 sample-size))))
+  (count (filter
+          #(office-has-path? population-factor %)
+          (range 1 sample-size))))
 
 (defn run-sample [population-factor sample-size]
   (let [offices-with-paths (offices-with-paths population-factor sample-size)
-        offices-paths-percentage (float (/ offices-with-paths sample-size))]
-    (println (format "%.1f -> %.4f " population-factor offices-paths-percentage))))
+        pathed-offices-% (float (/ offices-with-paths sample-size))]
+    (println (format
+              "%.1f -> %.4f "
+              population-factor
+              pathed-offices-%))))
 
 (defn -main
   "I don't do a whole lot ... yet."
