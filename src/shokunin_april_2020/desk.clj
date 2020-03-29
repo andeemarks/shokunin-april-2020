@@ -24,4 +24,7 @@
 (defn visited [] (->Desk false false true))
 
 (defn visitable? [desk]
-  (and (not (:visited? desk)) (not (:occupied? desk))))
+  (not
+   (or
+    (:visited? desk)
+    (:occupied? desk))))
