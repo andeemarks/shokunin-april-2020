@@ -14,7 +14,19 @@
 
   (testing "path not found when no visited location found in first row"
     (let [office (core/populate-office 2 2 0.0)]
-      (is (= false (path-exists? office))))))
+      (is (= false (path-exists? office)))))
+
+  (testing "an empty office is completely visited"
+    (let [office (core/populate-office 10 10 0.0)
+          visited-office (try-find-path office)]
+      (is (= 100 (count-visited visited-office)))))
+
+  (testing "a fully occupied office is completely unvisited"
+    (dotimes [i 100]
+      (let [office (core/populate-office 10 10 1.0)
+            visited-office (try-find-path office)
+            visited-count (count-visited visited-office)]
+        (is (= 1 visited-count))))))
 
 (deftest finding-neighbours
   (testing "northern neighbour returned when one exists"
@@ -47,19 +59,6 @@
            (neighbour office (->Coordinate 1 1) :up))))))
 
 (def ^:const origin (->Coordinate 0 0))
-
-(deftest path-finding
-  (testing "an empty office is completely visited"
-    (let [office (core/populate-office 10 10 0.0)
-          visited-office (try-find-path office)]
-      (is (= 100 (count-visited visited-office)))))
-
-  (testing "a fully occupied office is completely unvisited"
-    (dotimes [i 100]
-      (let [office (core/populate-office 10 10 1.0)
-            visited-office (try-find-path office)
-            visited-count (count-visited visited-office)]
-        (is (= 1 visited-count))))))
 
 (deftest flood-filling
 

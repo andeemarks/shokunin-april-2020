@@ -53,6 +53,8 @@
 (defn population-size [office]
   (reduce + (map count-occupied-in-row office)))
 
+(defn- row-to-string [row]
+  (str (apply pr-str row) "\n"))
+
 (defn to-string [office]
-  (doseq [row office]
-    (println (apply pr-str row))))
+  (doall (map row-to-string office)))
