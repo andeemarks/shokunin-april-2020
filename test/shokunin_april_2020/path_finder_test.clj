@@ -43,21 +43,25 @@
   (testing "invalid directions generate errors"
     (let [office (core/populate-office 3 3 1)]
       (is (thrown?
-          IllegalArgumentException
-          (neighbour office (->Coordinate 1 1) :up))))))
+           IllegalArgumentException
+           (neighbour office (->Coordinate 1 1) :up))))))
 
 (def ^:const origin (->Coordinate 0 0))
 
-(deftest flood-filling
-  (testing "an empty office is completely filled"
+(deftest path-finding
+  (testing "an empty office is completely visited"
     (let [office (core/populate-office 10 10 0.0)
-          visited-office (flood-fill office origin)]
+          visited-office (try-find-path office)]
       (is (= 100 (count-visited visited-office)))))
 
-  (testing "a fully occupied office is completely unfilled"
-    (let [office (core/populate-office 10 10 1.0)
-          visited-office (flood-fill office origin)]
-      (is (= 0 (count-visited visited-office)))))
+  (testing "a fully occupied office is completely unvisited"
+    (dotimes [i 100]
+      (let [office (core/populate-office 10 10 1.0)
+            visited-office (try-find-path office)
+            visited-count (count-visited visited-office)]
+        (is (= 1 visited-count))))))
+
+(deftest flood-filling
 
   (testing "visiting an already visited location does nothing"
     (let [office (core/populate-office 2 2 0.0)
