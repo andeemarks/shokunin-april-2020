@@ -10,22 +10,22 @@
   (testing "path found when visited location found in first row"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-visited! office (->Coordinate 1 0))]
-      (is (= true (path-exists? office)))))
+      (is (= true (office/path-exists? office)))))
 
   (testing "path not found when no visited location found in first row"
     (let [office (core/populate-office 2 2 0.0)]
-      (is (= false (path-exists? office)))))
+      (is (= false (office/path-exists? office)))))
 
   (testing "an empty office is completely visited"
     (let [office (core/populate-office 10 10 0.0)
           visited-office (try-find-path office)]
-      (is (= 100 (count-visited visited-office)))))
+      (is (= 100 (office/count-visited visited-office)))))
 
   (testing "a fully occupied office is completely unvisited"
     (dotimes [i 100]
       (let [office (core/populate-office 10 10 1.0)
             visited-office (try-find-path office)
-            visited-count (count-visited visited-office)]
+            visited-count (office/count-visited visited-office)]
         (is (= 1 visited-count))))))
 
 (deftest finding-neighbours

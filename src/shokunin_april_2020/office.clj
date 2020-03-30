@@ -58,3 +58,14 @@
 
 (defn to-string [office]
   (doall (map row-to-string office)))
+
+(defn- count-visited-in-row [row] (count (filter :visited? row)))
+
+(defn count-visited [office]
+  (reduce + (map count-visited-in-row office)))
+
+(defn- path-to-first-row-found? [first-row]
+  (not= 0 (count-visited-in-row first-row)))
+
+(defn path-exists? [office]
+  (path-to-first-row-found? (first-row office)))

@@ -4,17 +4,6 @@
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
 
-(defn- count-visited-in-row [row] (count (filter :visited? row)))
-
-(defn count-visited [office]
-  (reduce + (map count-visited-in-row office)))
-
-(defn- path-to-first-row-found? [first-row]
-  (not= 0 (count-visited-in-row first-row)))
-
-(defn path-exists? [office]
-  (path-to-first-row-found? (office/first-row office)))
-
 (defn neighbour [office coordinate direction]
   (let [neighbour-coordinates (coord/neighbour coordinate direction)]
     (when (coord/within-office? neighbour-coordinates office)

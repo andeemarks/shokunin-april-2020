@@ -16,7 +16,7 @@
 
 (defn- office-has-path? [office _]
   (let [visited-office (pf/try-find-path office)]
-    (pf/path-exists? visited-office)))
+    (office/path-exists? visited-office)))
 
 (defn offices-with-paths [population-factor sample-size]
   (count (filter
