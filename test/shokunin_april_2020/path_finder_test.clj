@@ -1,7 +1,7 @@
 (ns shokunin-april-2020.path-finder-test
   (:require [clojure.test :refer :all]
             [shokunin-april-2020.core :as core]
-            [shokunin-april-2020.desk :as loc]
+            [shokunin-april-2020.desk :as desk]
             [shokunin-april-2020.coordinate :refer (->Coordinate)]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :refer :all]))
@@ -66,16 +66,16 @@
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-visited! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (loc/visited) (office/location-at visited-office origin)))))
+      (is (= (desk/visited) (office/location-at visited-office origin)))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-populated! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (loc/populated) (office/location-at visited-office origin)))))
+      (is (= (desk/populated) (office/location-at visited-office origin)))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-empty! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (loc/visited) (office/location-at visited-office origin))))))
+      (is (= (desk/visited) (office/location-at visited-office origin))))))
