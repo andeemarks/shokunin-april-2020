@@ -3,7 +3,7 @@
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :as pf]
-            [shokunin-april-2020.desk :as desk :refer (->Desk)]))
+            [shokunin-april-2020.desk :as desk]))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
