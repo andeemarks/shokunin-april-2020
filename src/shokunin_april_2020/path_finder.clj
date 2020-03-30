@@ -4,16 +4,11 @@
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
 
-(defn neighbour [office coordinate direction]
-  (let [neighbour-coordinates (coord/neighbour coordinate direction)]
-    (when (coord/within-office? neighbour-coordinates office)
-      neighbour-coordinates)))
-
 ; needed because of cyclic calls between flood-fill and visit-neighbour
 (declare flood-fill)
 
 (defn- visit-neighbour [office current-coordinate direction]
-  (let [neighbour (neighbour office current-coordinate direction)]
+  (let [neighbour (coord/neighbour office current-coordinate direction)]
     (when-not (nil? neighbour)
       (flood-fill office neighbour))))
 
