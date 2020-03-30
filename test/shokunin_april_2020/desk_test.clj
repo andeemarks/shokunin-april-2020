@@ -14,3 +14,10 @@
 
   (testing "occupied desks are not visitable"
     (is (not (visitable? (populated))))))
+
+(deftest string-representation
+  (testing "each type of desk has different representation"
+    (is (= " " (to-string (empty))))
+    (is (= "*" (to-string (twer))))
+    (is (= "X" (to-string (populated))))
+    (is (= "." (to-string (visited))))))

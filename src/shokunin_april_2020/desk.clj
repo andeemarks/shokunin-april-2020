@@ -3,7 +3,7 @@
 
 (defrecord Desk [occupied? has-twer? visited?])
 
-(defn- to-string [desk]
+(defn to-string [desk]
   (if (:occupied? desk)
     "X"
     (if (:has-twer? desk)
