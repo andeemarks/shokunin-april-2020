@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [shokunin-april-2020.core :as core]
             [shokunin-april-2020.desk :as desk]
-            [shokunin-april-2020.coordinate :refer (->Coordinate)]
+            [shokunin-april-2020.location :refer (->Location)]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :refer :all]))
 
@@ -19,7 +19,7 @@
             visited-count (office/count-visited visited-office)]
         (is (= 1 visited-count))))))
 
-(def ^:const origin (->Coordinate 0 0))
+(def ^:const origin (->Location 0 0))
 
 (deftest flood-filling
 
