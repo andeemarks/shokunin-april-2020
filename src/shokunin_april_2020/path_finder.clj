@@ -14,8 +14,8 @@
 
 ; Taken from https://en.wikipedia.org/wiki/Flood_fill
 (defn flood-fill [office current-coordinate]
-  (let [current-location (office/desk-at office current-coordinate)]
-    (when (desk/visitable? current-location)
+  (let [current-desk (office/desk-at office current-coordinate)]
+    (when (desk/visitable? current-desk)
       (office/mark-desk-as-visited! office current-coordinate)
       (visit-neighbour office current-coordinate :north)
       (visit-neighbour office current-coordinate :south)
