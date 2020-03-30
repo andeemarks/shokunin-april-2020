@@ -1,6 +1,6 @@
 (ns shokunin-april-2020.path-finder
   (:require [shokunin-april-2020.desk :as desk]
-            [shokunin-april-2020.location :as coord :refer (->Location)]
+            [shokunin-april-2020.location :as loc :refer (->Location)]
             [shokunin-april-2020.office :as office]
             [clojure.tools.logging :as log]))
 
@@ -8,7 +8,7 @@
 (declare flood-fill)
 
 (defn- visit-neighbour [office current-location direction]
-  (let [neighbour (coord/neighbour office current-location direction)]
+  (let [neighbour (loc/neighbour office current-location direction)]
     (when-not (nil? neighbour)
       (flood-fill office neighbour))))
 
