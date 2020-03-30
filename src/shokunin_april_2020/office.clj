@@ -5,21 +5,21 @@
 (defn from-desks [desks desks-per-row]
   (to-array-2d (partition desks-per-row desks)))
 
-(defn- mark-as [office coordinate desk]
-  (aset office (:row coordinate) (:column coordinate) desk)
+(defn- mark-as [office location desk]
+  (aset office (:row location) (:column location) desk)
   office)
 
-(defn mark-desk-as-visited! [office coordinate]
+(defn mark-desk-as-visited! [office location]
   ; (log/infof "Marking %d %d as visited" row column)
-  (mark-as office coordinate (desk/visited))
+  (mark-as office location (desk/visited))
   office)
 
-(defn mark-desk-as-populated! [office coordinate]
-  (mark-as office coordinate (desk/populated))
+(defn mark-desk-as-populated! [office location]
+  (mark-as office location (desk/populated))
   office)
 
-(defn mark-desk-as-empty! [office coordinate]
-  (mark-as office coordinate (desk/empty))
+(defn mark-desk-as-empty! [office location]
+  (mark-as office location (desk/empty))
   office)
 
 (defn width [office] (alength (aget office 0)))
@@ -27,8 +27,8 @@
 (defn first-row [office] (aget office (dec (depth office))))
 (defn last-row [office] (aget office 0))
 (defn desk-at
-  [office coordinate]
-  (aget office (:row coordinate) (:column coordinate)))
+  [office location]
+  (aget office (:row location) (:column location)))
 
 (defn populate-twer! [office]
   (let [twer-desk-index (rand-int (width office))]
