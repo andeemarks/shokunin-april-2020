@@ -3,13 +3,13 @@
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :as pf]
-            [shokunin-april-2020.desk :as loc :refer (->Desk)]))
+            [shokunin-april-2020.desk :as desk :refer (->Desk)]))
 
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (loc/populated))
-        unpopulated-desks (repeat (- office-size number-colleagues) (loc/empty))
+        populated-desks (repeat number-colleagues (desk/populated))
+        unpopulated-desks (repeat (- office-size number-colleagues) (desk/empty))
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)]
     (office/populate-twer! (office/from-desks random-desks desks-per-row))))
