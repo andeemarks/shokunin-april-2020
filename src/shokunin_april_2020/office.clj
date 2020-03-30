@@ -26,7 +26,7 @@
 (defn depth [office] (alength office))
 (defn first-row [office] (aget office (dec (depth office))))
 (defn last-row [office] (aget office 0))
-(defn location-at
+(defn desk-at
   [office coordinate]
   (aget office (:row coordinate) (:column coordinate)))
 

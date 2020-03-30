@@ -66,16 +66,16 @@
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-visited! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (desk/visited) (office/location-at visited-office origin)))))
+      (is (= (desk/visited) (office/desk-at visited-office origin)))))
 
   (testing "visiting an occupied location does nothing"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-populated! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (desk/populated) (office/location-at visited-office origin)))))
+      (is (= (desk/populated) (office/desk-at visited-office origin)))))
 
   (testing "visiting an unvisited location marks it as visited"
     (let [office (core/populate-office 2 2 0.0)
           _ (office/mark-location-as-empty! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (desk/visited) (office/location-at visited-office origin))))))
+      (is (= (desk/visited) (office/desk-at visited-office origin))))))
