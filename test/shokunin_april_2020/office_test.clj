@@ -7,7 +7,7 @@
 (deftest path-finding
   (testing "path found when visited location found in first row"
     (let [office (core/populate-office 2 2 0.0)
-          _ (mark-location-as-visited! office (->Coordinate 1 0))]
+          _ (mark-desk-as-visited! office (->Coordinate 1 0))]
       (is (= true (path-exists? office)))))
 
   (testing "path not found when no visited location found in first row"

@@ -5,20 +5,20 @@
 (defn from-desks [desks desks-per-row]
   (to-array-2d (partition desks-per-row desks)))
 
-(defn- mark-as [office coordinate location]
-  (aset office (:row coordinate) (:column coordinate) location)
+(defn- mark-as [office coordinate desk]
+  (aset office (:row coordinate) (:column coordinate) desk)
   office)
 
-(defn mark-location-as-visited! [office coordinate]
+(defn mark-desk-as-visited! [office coordinate]
   ; (log/infof "Marking %d %d as visited" row column)
   (mark-as office coordinate (desk/visited))
   office)
 
-(defn mark-location-as-populated! [office coordinate]
+(defn mark-desk-as-populated! [office coordinate]
   (mark-as office coordinate (desk/populated))
   office)
 
-(defn mark-location-as-empty! [office coordinate]
+(defn mark-desk-as-empty! [office coordinate]
   (mark-as office coordinate (desk/empty))
   office)
 
