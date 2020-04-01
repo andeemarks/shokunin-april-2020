@@ -3,21 +3,8 @@
   (:require [clojure.pprint :as pp]
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :as pf]
+            [shokunin-april-2020.runresult :refer [->RunResult]]
             [shokunin-april-2020.desk :as desk]))
-
-(defrecord RunResult [p offices-with-paths sample-size])
-
-(defn to-string
-  [result]
-  (format "%.1f -> %.4f "
-          (:p result)
-          (float (/ (:offices-with-paths result) (:sample-size result)))))
-
-(defmethod print-method RunResult [result ^java.io.Writer writer]
-  (print-method (to-string result) writer))
-
-(defmethod print-dup RunResult [result ^java.io.Writer writer]
-  (print-dup (to-string result) writer))
 
 (defn- office-has-path? [office _]
   (let [visited-office (pf/try-find-path office)]
