@@ -8,7 +8,7 @@
 (defn empty-square-of-width 
   "Helper constructor for tests needing to build offices without caring about contents or shape."
   [width]
-  (from-desks (repeatedly (* width width) desk/empty) width))
+  (from-desks (repeatedly (* width width) desk/unoccupied) width))
 
 (defn- mark-as [office location desk]
   (aset office (:row location) (:column location) desk)
@@ -19,10 +19,10 @@
   (mark-as office location (desk/visited)))
 
 (defn mark-desk-as-populated! [office location]
-  (mark-as office location (desk/populated)))
+  (mark-as office location (desk/occupied)))
 
 (defn mark-desk-as-empty! [office location]
-  (mark-as office location (desk/empty)))
+  (mark-as office location (desk/unoccupied)))
 
 (defn width
   "The number of desks across the width of the office."
@@ -55,7 +55,7 @@
 (defn find-twer [office]
   (let [row-with-twer (row-with-twer office)
         index-of-twer (index-of-twer row-with-twer office)]
-    (if (< index-of-twer 0)
+    (if (<= index-of-twer twer-not-found)
       (throw (IllegalStateException. "No TWer found in office"))
       {:row 0 :column index-of-twer})))
 

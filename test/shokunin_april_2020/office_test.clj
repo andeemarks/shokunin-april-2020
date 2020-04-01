@@ -23,11 +23,11 @@
 
   (testing "desks can be marked as empty"
     (let [updated-office (mark-desk-as-empty! office origin)]
-      (is (= (desk/empty) (desk-at updated-office origin)))))
+      (is (= (desk/unoccupied) (desk-at updated-office origin)))))
 
   (testing "desks can be marked as populated"
     (let [updated-office (mark-desk-as-populated! office origin)]
-      (is (= (desk/populated) (desk-at updated-office origin))))))
+      (is (= (desk/occupied) (desk-at updated-office origin))))))
 
 (deftest finding-twer
   (testing "fails if no TWer is found"

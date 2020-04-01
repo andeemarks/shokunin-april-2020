@@ -18,8 +18,8 @@
 (defmethod print-dup Desk [desk ^java.io.Writer writer]
   (print-dup (to-string desk) writer))
 
-(defn empty [] (->Desk false false false))
-(defn populated [] (->Desk true false false))
+(defn unoccupied [] (->Desk false false false))
+(defn occupied [] (->Desk true false false))
 (defn twer [] (->Desk false true false))
 (defn visited [] (->Desk false false true))
 

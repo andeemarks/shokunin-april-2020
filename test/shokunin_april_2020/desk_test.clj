@@ -4,7 +4,7 @@
 
 (deftest visitable-status
   (testing "empty desks are visitable"
-    (is (visitable? (empty))))
+    (is (visitable? (unoccupied))))
 
   (testing "desks with the TWer are visitable"
     (is (visitable? (twer))))
@@ -13,11 +13,11 @@
     (is (not (visitable? (visited)))))
 
   (testing "occupied desks are not visitable"
-    (is (not (visitable? (populated))))))
+    (is (not (visitable? (occupied))))))
 
 (deftest string-representation
   (testing "each type of desk has different representation"
-    (is (= " " (to-string (empty))))
+    (is (= " " (to-string (unoccupied))))
     (is (= "*" (to-string (twer))))
-    (is (= "X" (to-string (populated))))
+    (is (= "X" (to-string (occupied))))
     (is (= "." (to-string (visited))))))

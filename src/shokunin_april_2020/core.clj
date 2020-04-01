@@ -8,8 +8,8 @@
 (defn populate-office [rows-per-office desks-per-row population-factor]
   (let [office-size (* rows-per-office desks-per-row)
         number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (desk/populated))
-        unpopulated-desks (repeat (- office-size number-colleagues) (desk/empty))
+        populated-desks (repeat number-colleagues (desk/occupied))
+        unpopulated-desks (repeat (- office-size number-colleagues) (desk/unoccupied))
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)]
     (office/place-twer! (office/from-desks random-desks desks-per-row))))

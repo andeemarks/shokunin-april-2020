@@ -33,7 +33,7 @@
     (let [office (office/empty-square-of-width 2)
           _ (office/mark-desk-as-populated! office origin)
           visited-office (flood-fill office origin)]
-      (is (= (desk/populated) (office/desk-at visited-office origin)))))
+      (is (= (desk/occupied) (office/desk-at visited-office origin)))))
 
   (testing "visiting an unvisited desk marks it as visited"
     (let [office (office/empty-square-of-width 2)
