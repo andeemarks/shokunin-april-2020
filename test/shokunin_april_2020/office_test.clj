@@ -10,11 +10,11 @@
 (deftest path-finding
   (testing "path found when visited desk found in first row"
     (let [_ (mark-desk-as-visited! office (->Location 1 0))]
-      (is (= true (path-exists? office)))))
+      (is (true? (path-exists? office)))))
 
   (testing "path not found when no visited desk found in first row"
     (let [empty-office (empty-square-of-width 2)]
-      (is (= false (path-exists? empty-office))))))
+      (is (false? (path-exists? empty-office))))))
 
 (deftest marking-desks
   (testing "desks can be marked as visited"
@@ -28,3 +28,9 @@
   (testing "desks can be marked as populated"
     (let [updated-office (mark-desk-as-populated! office origin)]
       (is (= (desk/populated) (desk-at updated-office origin))))))
+
+(deftest placing-twer
+  (testing "placement is in last row"
+    (dotimes [i 100]
+      (let [updated-office (place-twer! office)]
+        (is (= 0 (:row (find-twer office))))))))
