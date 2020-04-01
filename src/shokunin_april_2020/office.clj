@@ -2,8 +2,8 @@
   (:require [shokunin-april-2020.desk :as desk]
             [clojure.tools.logging :as log]))
 
-(defn from-desks [desks desks-per-row]
-  (to-array-2d (partition desks-per-row desks)))
+(defn- from-desks [desks depth]
+  (to-array-2d (partition depth desks)))
 
 (defn empty-square-of-width 
   "Helper constructor for tests needing to build offices without caring about contents or shape."
@@ -69,13 +69,12 @@
 (defn count-visited [office] (reduce + (map count-visited-in-row office)))
 (defn count-occupied [office] (reduce + (map count-occupied-in-row office)))
 
-(defn populate-office [rows-per-office desks-per-row population-factor]
-  (let [office-size (* rows-per-office desks-per-row)
-        number-colleagues (* office-size population-factor)
-        occupied-desks (repeat number-colleagues (desk/occupied))
-        populated-desks (repeat (- office-size number-colleagues) (desk/unoccupied))
-        all-desks (concat occupied-desks populated-desks)
-        random-desks (shuffle all-desks)]
-    (place-twer! (from-desks random-desks desks-per-row))))
+(defn populate-office [width depth population-factor]
+  (let [office-size (* width depth)
+        colleague-count (* office-size population-factor)
+        occupied-desks (repeat colleague-count (desk/occupied))
+        unoccupied-desks (repeat (- office-size colleague-count) (desk/unoccupied))
+        random-desks (shuffle (concat occupied-desks unoccupied-desks))]
+    (place-twer! (from-desks random-desks depth))))
 
 
