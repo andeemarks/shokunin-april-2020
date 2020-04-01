@@ -12,7 +12,7 @@
         unpopulated-desks (repeat (- office-size number-colleagues) (desk/empty))
         all-desks (concat populated-desks unpopulated-desks)
         random-desks (shuffle all-desks)]
-    (office/populate-twer! (office/from-desks random-desks desks-per-row))))
+    (office/place-twer! (office/from-desks random-desks desks-per-row))))
 
 (defn- office-has-path? [office _]
   (let [visited-office (pf/try-find-path office)]

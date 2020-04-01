@@ -33,6 +33,6 @@
                 (:column (office/find-twer (populate-office 10 10 0.5)))))))
 
   (testing "populates the office according to the p value"
-    (is (approx (office/population-size (populate-office 2 5 0.4)) 4 1))
-    (is (approx (office/population-size (populate-office 10 10 0.2)) 20 1))
-    (is (approx (office/population-size (populate-office 25 40 0.8)) 800 1))))
+    (is (approx (office/count-occupied (populate-office 2 5 0.4)) 4 1))
+    (is (approx (office/count-occupied (populate-office 10 10 0.2)) 20 1))
+    (is (approx (office/count-occupied (populate-office 25 40 0.8)) 800 1))))
