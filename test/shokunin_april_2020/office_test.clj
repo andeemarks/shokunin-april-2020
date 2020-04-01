@@ -1,22 +1,20 @@
 (ns shokunin-april-2020.office-test
   (:require [clojure.test :refer :all]
-            [shokunin-april-2020.core :as core]
             [shokunin-april-2020.desk :as desk]
             [shokunin-april-2020.location :refer (->Location)]
             [shokunin-april-2020.office :refer :all]))
 
+(def ^:const origin (->Location 0 0))
+(def office (empty-square-of-width 2))
+
 (deftest path-finding
   (testing "path found when visited desk found in first row"
-    (let [office (core/populate-office 2 2 0.0)
-          _ (mark-desk-as-visited! office (->Location 1 0))]
+    (let [_ (mark-desk-as-visited! office (->Location 1 0))]
       (is (= true (path-exists? office)))))
 
   (testing "path not found when no visited desk found in first row"
-    (let [office (core/populate-office 2 2 0.0)]
-      (is (= false (path-exists? office))))))
-
-(def ^:const origin (->Location 0 0))
-(def office (core/populate-office 1 1 0.0))
+    (let [empty-office (empty-square-of-width 2)]
+      (is (= false (path-exists? empty-office))))))
 
 (deftest marking-desks
   (testing "desks can be marked as visited"

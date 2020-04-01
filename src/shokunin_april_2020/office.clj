@@ -5,6 +5,9 @@
 (defn from-desks [desks desks-per-row]
   (to-array-2d (partition desks-per-row desks)))
 
+(defn empty-square-of-width [width]
+  (from-desks (repeatedly (* width width) desk/empty) width))
+
 (defn- mark-as [office location desk]
   (aset office (:row location) (:column location) desk)
   office)

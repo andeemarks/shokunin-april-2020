@@ -6,9 +6,11 @@
             [shokunin-april-2020.office :as office]
             [shokunin-april-2020.path-finder :refer :all]))
 
+(def ^:const origin (->Location 0 0))
+
 (deftest path-finding
   (testing "an empty office is completely visited"
-    (let [office (core/populate-office 10 10 0.0)
+    (let [office (office/empty-square-of-width 10)
           visited-office (try-find-path office)]
       (is (= 100 (office/count-visited visited-office)))))
 
@@ -19,24 +21,22 @@
             visited-count (office/count-visited visited-office)]
         (is (= 1 visited-count))))))
 
-(def ^:const origin (->Location 0 0))
-
 (deftest flood-filling
 
   (testing "visiting an already visited desk does nothing"
-    (let [office (core/populate-office 2 2 0.0)
+    (let [office (office/empty-square-of-width 2)
           _ (office/mark-desk-as-visited! office origin)
           visited-office (flood-fill office origin)]
       (is (= (desk/visited) (office/desk-at visited-office origin)))))
 
   (testing "visiting an occupied desk does nothing"
-    (let [office (core/populate-office 2 2 0.0)
+    (let [office (office/empty-square-of-width 2)
           _ (office/mark-desk-as-populated! office origin)
           visited-office (flood-fill office origin)]
       (is (= (desk/populated) (office/desk-at visited-office origin)))))
 
   (testing "visiting an unvisited desk marks it as visited"
-    (let [office (core/populate-office 2 2 0.0)
+    (let [office (office/empty-square-of-width 2)
           _ (office/mark-desk-as-empty! office origin)
           visited-office (flood-fill office origin)]
       (is (= (desk/visited) (office/desk-at visited-office origin))))))
