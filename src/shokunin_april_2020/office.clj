@@ -5,7 +5,9 @@
 (defn from-desks [desks desks-per-row]
   (to-array-2d (partition desks-per-row desks)))
 
-(defn empty-square-of-width [width]
+(defn empty-square-of-width 
+  "Helper constructor for tests needing to build offices without caring about contents or shape."
+  [width]
   (from-desks (repeatedly (* width width) desk/empty) width))
 
 (defn- mark-as [office location desk]
@@ -14,21 +16,25 @@
 
 (defn mark-desk-as-visited! [office location]
   ; (log/infof "Marking %d %d as visited" row column)
-  (mark-as office location (desk/visited))
-  office)
+  (mark-as office location (desk/visited)))
 
 (defn mark-desk-as-populated! [office location]
-  (mark-as office location (desk/populated))
-  office)
+  (mark-as office location (desk/populated)))
 
 (defn mark-desk-as-empty! [office location]
-  (mark-as office location (desk/empty))
-  office)
+  (mark-as office location (desk/empty)))
 
-(defn width [office] (alength (aget office 0)))
-(defn depth [office] (alength office))
-(defn first-row [office] (aget office (dec (depth office))))
-(defn last-row [office] (aget office 0))
+(defn width
+  "The number of desks across the width of the office."
+  [office] (alength (aget office 0)))
+
+(defn depth
+  "The number of rows of desks across the depth of the office."
+  [office] (alength office))
+
+(defn- row [office n] (aget office n))
+(defn exit-row [office] (row office (dec (depth office))))
+(defn row-with-twer [office] (row office 0))
 (defn desk-at [office location] (aget office (:row location) (:column location)))
 
 (defn place-twer! [office]
@@ -36,27 +42,29 @@
     (aset office 0 twer-desk-index (desk/twer))
     office))
 
+(def ^:const twer-not-found -1)
+
 (defn- index-if-twer [row current-index]
   (if (:has-twer? (aget row current-index))
     current-index
-    -1))
+    twer-not-found))
 
-(defn- index-of-twer [last-row office]
-  (areduce last-row i ret -1 (max ret (index-if-twer last-row i))))
+(defn- index-of-twer [row-with-twer office]
+  (areduce row-with-twer i ret twer-not-found (max ret (index-if-twer row-with-twer i))))
 
 (defn find-twer [office]
-  (let [last-row (last-row office)
-        index-of-twer (index-of-twer last-row office)]
-      (if (< index-of-twer 0)
-        (throw (IllegalStateException. "No TWer found in office"))
-        {:row 0 :column index-of-twer})))
+  (let [row-with-twer (row-with-twer office)
+        index-of-twer (index-of-twer row-with-twer office)]
+    (if (< index-of-twer 0)
+      (throw (IllegalStateException. "No TWer found in office"))
+      {:row 0 :column index-of-twer})))
 
 (defn- count-occupied-in-row [row] (count (filter :occupied? row)))
 (defn- row-to-string [row] (str (apply pr-str row) "\n"))
 (defn- count-visited-in-row [row] (count (filter :visited? row)))
-(defn- path-to-first-row-found? [first-row] (not= 0 (count-visited-in-row first-row)))
+(defn- path-to-exit-row-found? [exit-row] (not= 0 (count-visited-in-row exit-row)))
 
-(defn path-exists? [office] (path-to-first-row-found? (first-row office)))
+(defn path-exists? [office] (path-to-exit-row-found? (exit-row office)))
 (defn to-string [office] (doall (map row-to-string office)))
 (defn count-visited [office] (reduce + (map count-visited-in-row office)))
 (defn count-occupied [office] (reduce + (map count-occupied-in-row office)))
