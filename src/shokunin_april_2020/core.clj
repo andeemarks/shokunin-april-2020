@@ -5,22 +5,13 @@
             [shokunin-april-2020.path-finder :as pf]
             [shokunin-april-2020.desk :as desk]))
 
-(defn populate-office [rows-per-office desks-per-row population-factor]
-  (let [office-size (* rows-per-office desks-per-row)
-        number-colleagues (* office-size population-factor)
-        populated-desks (repeat number-colleagues (desk/occupied))
-        unpopulated-desks (repeat (- office-size number-colleagues) (desk/unoccupied))
-        all-desks (concat populated-desks unpopulated-desks)
-        random-desks (shuffle all-desks)]
-    (office/place-twer! (office/from-desks random-desks desks-per-row))))
-
 (defn- office-has-path? [office _]
   (let [visited-office (pf/try-find-path office)]
     (office/path-exists? visited-office)))
 
 (defn offices-with-paths [population-factor sample-size]
   (count (filter
-          #(office-has-path? (populate-office 10 10 population-factor) %)
+          #(office-has-path? (office/populate-office 10 10 population-factor) %)
           (range 0 sample-size))))
 
 (defn run-sample [population-factor sample-size]

@@ -68,3 +68,14 @@
 (defn to-string [office] (doall (map row-to-string office)))
 (defn count-visited [office] (reduce + (map count-visited-in-row office)))
 (defn count-occupied [office] (reduce + (map count-occupied-in-row office)))
+
+(defn populate-office [rows-per-office desks-per-row population-factor]
+  (let [office-size (* rows-per-office desks-per-row)
+        number-colleagues (* office-size population-factor)
+        occupied-desks (repeat number-colleagues (desk/occupied))
+        populated-desks (repeat (- office-size number-colleagues) (desk/unoccupied))
+        all-desks (concat occupied-desks populated-desks)
+        random-desks (shuffle all-desks)]
+    (place-twer! (from-desks random-desks desks-per-row))))
+
+
