@@ -18,10 +18,10 @@
 (defmethod print-dup Desk [desk ^java.io.Writer writer]
   (print-dup (to-string desk) writer))
 
-(defn unoccupied [] (->Desk false false false))
-(defn occupied [] (->Desk true false false))
-(defn twer [] (->Desk false true false))
-(defn visited [] (->Desk false false true))
+(defn unoccupied [] (map->Desk {}))
+(defn occupied [] (map->Desk {:occupied? true}))
+(defn twer [] (map->Desk {:has-twer? true}))
+(defn visited [] (map->Desk {:visited? true}))
 
 (defn visitable? [desk]
   (not
