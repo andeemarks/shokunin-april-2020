@@ -10,13 +10,13 @@
 
 (deftest path-finding
   (testing "an empty office is completely visited"
-    (let [office (office/empty-square-of-width 10)
+    (let [office (core/populate-office 10 10 0)
           visited-office (try-find-path office)]
       (is (= 100 (office/count-visited visited-office)))))
 
   (testing "a fully occupied office is completely unvisited"
     (dotimes [i 100]
-      (let [office (core/populate-office 10 10 1.0)
+      (let [office (core/populate-office 10 10 1)
             visited-office (try-find-path office)
             visited-count (office/count-visited visited-office)]
         (is (= 1 visited-count))))))

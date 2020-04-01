@@ -29,8 +29,14 @@
     (let [updated-office (mark-desk-as-populated! office origin)]
       (is (= (desk/populated) (desk-at updated-office origin))))))
 
+(deftest finding-twer
+  (testing "fails if no TWer is found"
+    (is (thrown?
+         IllegalStateException
+         (find-twer (empty-square-of-width 2))))))
+
 (deftest placing-twer
   (testing "placement is in last row"
     (dotimes [i 100]
       (let [updated-office (place-twer! office)]
-        (is (= 0 (:row (find-twer office))))))))
+        (is (= 0 (:row (find-twer updated-office))))))))

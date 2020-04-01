@@ -39,15 +39,17 @@
 (defn- index-if-twer [row current-index]
   (if (:has-twer? (aget row current-index))
     current-index
-    0))
+    -1))
 
 (defn- index-of-twer [last-row office]
-  (areduce last-row i ret 0 (+ ret (index-if-twer last-row i))))
+  (areduce last-row i ret -1 (max ret (index-if-twer last-row i))))
 
 (defn find-twer [office]
   (let [last-row (last-row office)
         index-of-twer (index-of-twer last-row office)]
-    {:row 0 :column index-of-twer}))
+      (if (< index-of-twer 0)
+        (throw (IllegalStateException. "No TWer found in office"))
+        {:row 0 :column index-of-twer})))
 
 (defn- count-occupied-in-row [row] (count (filter :occupied? row)))
 (defn- row-to-string [row] (str (apply pr-str row) "\n"))
